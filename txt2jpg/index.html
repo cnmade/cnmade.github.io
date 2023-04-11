@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>文本转JPG下载</title>
+  <style>
+    td {
+      vertical-align: top;
+    }
+    #txtpreview {
+      width:640px;
+      padding:10px;
+      font-size:28px;
+      font-family: "PingFang SC",serif;
+    }
+  </style>
+</head>
+
+<body>
+<p>生成长图很简单，先输入你需要转换为长图的文本，然后 第一步：点击生成长图；第二步：点击下载图片</p>
+<table>
+  <tr>
+    <td>
+      <button onclick="refill_text()">第一步：点击生成长图</button>
+      <p></p>
+      <textarea id="txtin" style="width:640px;min-height:450px"></textarea>
+
+      <div id="txtpreview"></div>
+    </td>
+    <td>
+      <a id="download" download="myImage.jpg" href="" onclick="download_img(this);">第二步：点击下载图片</a>
+      <p id="cvs-mark"></p>
+
+    </td>
+  </tr>
+</table>
+<script type="text/javascript" src="/assets/js/html2canvas.min.js"></script>
+
+
+<script type="text/javascript">
+
+
+
+
+
+  refill_text = function () {
+
+
+    var vs = document.getElementById("txtpreview");
+    vs.innerText = document.getElementById("txtin").value;
+
+
+
+    html2canvas(document.querySelector("#txtpreview"), { scale: 2 }).then(cvs => {
+      var element = document.getElementById("cvs-mark");
+      while (element.firstChild) {
+        element.removeChild(element.firstChild);
+      }
+      element.appendChild(cvs);
+    });
+
+
+
+
+
+  }
+
+  download_img = function (el) {
+    var canvas = document.getElementsByTagName("canvas")[0];
+    var image = canvas.toDataURL("image/jpg");
+    el.href = image;
+  };
+
+</script>
+</body>
+
+</html>
