@@ -33,7 +33,51 @@
 
 // Initialize KioskBoard (default/all options)
 
-KioskBoard.init({
+
+
+
+
+console.log('👋 This message is being logged by "renderer.js", included via webpack');
+
+var calcInput = document.getElementById("calc-input");
+var outLet = document.getElementById("outlet");
+
+
+
+var bigmath = math.create(math.all, {
+    number: 'BigNumber', // Choose 'number' (default), 'BigNumber', or 'Fraction'
+    precision: 128        // 64 by default, only applicable for BigNumbers
+})
+
+
+function doCalc() {
+    let calcResult = bigmath.evaluate(calcInput.value);
+    outLet.innerHTML = "<p class=\"pending-calc\">" + calcInput.value + "</p>" +
+        "<p class=\"result\">   " + calcResult + "</p>" + outLet.innerHTML;
+    calcInput.value = calcResult;
+}
+
+calcInput.addEventListener('keydown', (e) => {
+    console.log(e.code);
+    if (e.code == "Enter" || e.code == 13) {
+        doCalc();
+        // outLet.scrollTop = outLet.scrollHeight;
+    }
+})
+
+
+window.addEventListener('resize', () => {
+    outLet.style.height = (window.outerHeight - 100)+"px";
+
+});
+
+
+
+
+
+
+
+KioskBoard.run('.js-virtual-keyboard', {
 
     /*!
     * Required
@@ -60,7 +104,7 @@ KioskBoard.init({
         },{
             "0": "0",
             "1": ".",
-            "2": "backspace",
+            "2": "Backspace",
             "3": "/"
         },
     ],
@@ -102,7 +146,7 @@ KioskBoard.init({
     * Allow or prevent real/physical keyboard usage. Prevented when "false"
     * In addition, the "allowMobileKeyboard" option must be "true" as well, if the real/physical keyboard has wanted to be used.
     */
-    allowRealKeyboard: false,
+    allowRealKeyboard: true,
 
     // Allow or prevent mobile keyboard usage. Prevented when "false"
     allowMobileKeyboard: false,
@@ -138,49 +182,9 @@ KioskBoard.init({
     keysEnterText: 'Enter',
 
     // The callback function of the Enter key. This function will be called when the enter key has been clicked.
-    keysEnterCallback: undefined,
+    keysEnterCallback: doCalc,
 
     // The Enter key can close and remove the keyboard. Prevented when "false"
-    keysEnterCanClose: true,
+    keysEnterCanClose: false,
 });
 
-
-
-KioskBoard.run('.js-virtual-keyboard');
-
-
-
-
-console.log('👋 This message is being logged by "renderer.js", included via webpack');
-
-var calcInput = document.getElementById("calc-input");
-var outLet = document.getElementById("outlet");
-
-
-
-var bigmath = math.create(math.all, {
-    number: 'BigNumber', // Choose 'number' (default), 'BigNumber', or 'Fraction'
-    precision: 128        // 64 by default, only applicable for BigNumbers
-})
-
-
-function doCalc() {
-    let calcResult = bigmath.evaluate(calcInput.value);
-    outLet.innerHTML = "<p class=\"pending-calc\">" + calcInput.value + "</p>" +
-        "<p class=\"result\">   " + calcResult + "</p>" + outLet.innerHTML;
-    calcInput.value = calcResult;
-}
-
-calcInput.addEventListener('keydown', (e) => {
-    console.log(e.code);
-    if (e.code == "Enter" || e.code == 13) {
-        doCalc();
-        // outLet.scrollTop = outLet.scrollHeight;
-    }
-})
-
-
-window.addEventListener('resize', () => {
-    outLet.style.height = (window.outerHeight - 100)+"px";
-
-});
