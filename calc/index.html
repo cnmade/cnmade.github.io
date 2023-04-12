@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <title>BSMI科学计算器-128位高精度</title>
     <link rel="stylesheet" href="/assets/calc/index.css">
+    <link rel="stylesheet" href="/assets/calc/kioskboard-2.3.0.min.css">
+    <script src="/assets/calc/kioskboard-2.3.0.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <div id="calc-container">
-    <input id="calc-input" placeholder="输入需要计算的数学表达式，如8+2，输回车开始计算" type="text" pattern="[0-9\-\+\*\/\.]*">
+    <input id="calc-input" placeholder="输入需要计算的数学表达式，如8+2，输回车开始计算" class="js-virtual-keyboard">
     <button onclick="doCalc()" style="padding: 10px;">Go</button>
     <div id="outlet"></div>
 </div>
